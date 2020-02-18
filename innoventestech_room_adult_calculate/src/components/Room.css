@@ -1,0 +1,45 @@
+.container{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin-top: 50px;
+}
+
+.headingcontainer{
+    display: flex;
+    align-items: center;       
+}
+.heading{
+text-align: start;
+color: rgb(24, 24, 148);
+margin-left: 5px;
+}
+.cardContainer{
+ width:650px;
+ text-align: start;
+}
+.roomFirstColumn{
+display: flex;
+flex-direction: row;
+}
+.roomDiv{
+display: flex;
+align-items: center;
+}
+.roomDivText{
+text-align: start;
+color: rgb(24, 24, 148);
+margin-left: 5px;
+}
+.roomSecondColmn{
+display: flex;
+flex-direction: row-reverse;
+font-size: 25px;
+}
+.roomSecondColumnSpan{
+    margin-left: 8px;
+}
+.fa {
+    color: rgb(24, 24, 148);
+    cursor: pointer;
+}
