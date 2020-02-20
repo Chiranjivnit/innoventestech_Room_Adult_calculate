@@ -20,6 +20,7 @@ class Room extends Component {
             this.setState({ room: 5 })
         }
     }
+    
     handleRemoveRoom = () => {
         let { room } = this.state;
         if (room > 1) {
@@ -37,9 +38,6 @@ class Room extends Component {
         } else if (adult < 4 && adult >= child) {
             this.setState({ adult: adult + 1, room: adult + 1 })
         }
-        // if (adult === 3) {
-        //     this.setState({ room: 4 })
-        // }
     }
 
     handleRemoveAdult = () => {
@@ -61,22 +59,11 @@ class Room extends Component {
 
     handleAddChild = () => {
         let { child, adult } = this.state;
-        this.setState({ child: child + 1 }, () => {
-            if(child<adult){
-                this.setState({room:adult+1})
-            }
-            if(child>adult){
-                this.setState({room:child+1})
-            }
-            if (child < 3 && child <= adult) {
-                this.setState({ child: child + 1, room: adult++ })
-                console.log('child', child)
-            } else if (child < 4 && child >= adult) {
-                console.log('child', child)
-                this.setState({ child: child + 1, room: child + 1 })
-            }
-        })
-
+        if (child < 4 && child < adult) {
+            this.setState({ child: child + 1, room: adult++ })
+        } else if (child < 4 && child >= adult) {
+            this.setState({ child: child + 1, room: child + 1 })
+        }
     }
 
     handleRemoveChild = () => {
