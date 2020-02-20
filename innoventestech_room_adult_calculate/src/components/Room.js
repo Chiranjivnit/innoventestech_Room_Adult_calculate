@@ -20,12 +20,18 @@ class Room extends Component {
             this.setState({ room: 5 })
         }
     }
-    
+
     handleRemoveRoom = () => {
-        let { room } = this.state;
+        let { room, adult, child } = this.state;
         if (room > 1) {
             this.setState({ room: room - 1 })
         }
+        if (adult > 1 && adult >= room) {
+            this.setState({ adult: room -1 })
+        } 
+         if (child > 1 && child >= room) {
+            this.setState({ child:room -1 })
+        } 
     }
 
     handleAddAdult = () => {
