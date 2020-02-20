@@ -28,32 +28,68 @@ class Room extends Component {
     }
 
     handleAddAdult = () => {
-        let { adult } = this.state;
-        this.setState({ adult: adult + 1 })
-        if (adult > 3) {
-            this.setState({ adult: 4 })
+        let { adult, child } = this.state;
+        if (adult === 1) {
+            this.setState({ adult: 2 })
         }
+        if (adult < 4 && adult < child) {
+            this.setState({ adult: adult + 1, room: child++ })
+        } else if (adult < 4 && adult >= child) {
+            this.setState({ adult: adult + 1, room: adult + 1 })
+        }
+        // if (adult === 3) {
+        //     this.setState({ room: 4 })
+        // }
     }
 
     handleRemoveAdult = () => {
-        let { adult } = this.state;
+        let { adult, child, room } = this.state;
         if (adult > 1) {
             this.setState({ adult: adult - 1 })
+        }
+        if (adult > 1 && adult < child) {
+            this.setState({ room: child })
+        } else if (adult > 1 && adult > child) {
+            this.setState({ room: adult - 1 })
+        } else if (adult === child) {
+            this.setState({ room: room })
+        }
+        if (adult === 0) {
+            this.setState({ room: 1 })
         }
     }
 
     handleAddChild = () => {
-        let { child } = this.state;
-        this.setState({ child: child + 1 })
-        if (child > 3) {
-            this.setState({ child: 4 })
-        }
+        let { child, adult } = this.state;
+        this.setState({ child: child + 1 }, () => {
+            if(child<adult){
+                this.setState({room:adult+1})
+            }
+            if(child>adult){
+                this.setState({room:child+1})
+            }
+            if (child < 3 && child <= adult) {
+                this.setState({ child: child + 1, room: adult++ })
+                console.log('child', child)
+            } else if (child < 4 && child >= adult) {
+                console.log('child', child)
+                this.setState({ child: child + 1, room: child + 1 })
+            }
+        })
+
     }
 
     handleRemoveChild = () => {
-        let { child } = this.state;
-        if (child) {
+        let { child, adult, room } = this.state;
+        if (child >= 1) {
             this.setState({ child: child - 1 })
+        }
+        if (child > 1 && child < adult) {
+            this.setState({ room: adult })
+        } else if (child > 1 && child > adult) {
+            this.setState({ room: child - 1 })
+        } else if (child === adult) {
+            this.setState({ room: room })
         }
     }
 
@@ -74,7 +110,7 @@ class Room extends Component {
                                 <List.Item>
                                     <Col className="roomFirstColumn" span={12}>
                                         <div className="roomDiv" >
-                                            <i class="fa fa-bed fa-2x" aria-hidden="true"></i>
+                                            <i className="fa fa-bed fa-2x" aria-hidden="true"></i>
                                             <span>
                                                 <h3 className="roomDivText" >ROOMS</h3>
                                             </span>
@@ -82,9 +118,9 @@ class Room extends Component {
                                     </Col>
                                     <Col className="roomSecondColmn" span={12}>
                                         <div>
-                                            <i onClick={this.handleRemoveRoom} class="fa fa-minus-circle" aria-hidden="true"></i>
+                                            <i onClick={this.handleRemoveRoom} className="fa fa-minus-circle" aria-hidden="true"></i>
                                             <span className="roomSecondColumnSpan" >
-                                                {room}<i style={{ marginLeft: 8, color: 'red' }} onClick={this.handleAddRoom} class="fa fa-plus-circle fa-1x" aria-hidden="true"></i>
+                                                {room}<i style={{ marginLeft: 8, color: 'red' }} onClick={this.handleAddRoom} className="fa fa-plus-circle fa-1x" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </Col>
@@ -92,7 +128,7 @@ class Room extends Component {
                                 <List.Item>
                                     <Col className="roomFirstColumn">
                                         <div className="roomDiv">
-                                            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                                            <i className="fa fa-user fa-2x" aria-hidden="true"></i>
                                             <span>
                                                 <h3 className="roomDivText" >ADULTS</h3>
                                             </span>
@@ -100,9 +136,9 @@ class Room extends Component {
                                     </Col>
                                     <Col className="roomSecondColmn" span={12}>
                                         <div>
-                                            <i onClick={this.handleRemoveAdult} class="fa fa-minus-circle" aria-hidden="true"></i>
+                                            <i onClick={this.handleRemoveAdult} className="fa fa-minus-circle" aria-hidden="true"></i>
                                             <span className="roomSecondColumnSpan"> {adult}
-                                                <i onClick={this.handleAddAdult} style={{ marginLeft: 8, color: 'red' }} class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                <i onClick={this.handleAddAdult} style={{ marginLeft: 8, color: 'red' }} className="fa fa-plus-circle" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </Col>
@@ -110,7 +146,7 @@ class Room extends Component {
                                 <List.Item>
                                     <Col className="roomFirstColumn" span={12}>
                                         <div className="roomDiv">
-                                            <i class="fa fa-child fa-2x" aria-hidden="true"></i>
+                                            <i className="fa fa-child fa-2x" aria-hidden="true"></i>
                                             <span>
                                                 <h3 className="roomDivText" >CHILDREN</h3>
                                             </span>
@@ -118,9 +154,9 @@ class Room extends Component {
                                     </Col>
                                     <Col className="roomSecondColmn" span={12}>
                                         <div>
-                                            <i onClick={this.handleRemoveChild} class="fa fa-minus-circle" aria-hidden="true"></i>
+                                            <i onClick={this.handleRemoveChild} className="fa fa-minus-circle" aria-hidden="true"></i>
                                             <span className="roomSecondColumnSpan" >{child}
-                                                <i onClick={this.handleAddChild} style={{ marginLeft: 8, color: 'red' }} class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                <i onClick={this.handleAddChild} style={{ marginLeft: 8, color: 'red' }} className="fa fa-plus-circle" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </Col>
